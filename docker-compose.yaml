@@ -1,8 +1,10 @@
-version: "3"
+version: '3'
 
 services:
-  database:
-    image: "postgres:latest"
+  postgres:
+    image: 'postgres:latest'
+
+    restart: unless-stopped
 
     ports:
       - 5432:5432
@@ -11,3 +13,28 @@ services:
       POSTGRES_USER: histories
       POSTGRES_PASSWORD: histories
       POSTGRES_DB: histories
+
+    volumes:
+      - PostgresData:/data
+
+  minio:
+    image: 'bitnami/minio:latest'
+
+    restart: unless-stopped
+
+    ports:
+      - 9000:9000
+      - 9001:9001
+
+    environment:
+      MINIO_ROOT_USER: histories
+      MINIO_ROOT_PASSWORD: histories
+      MINIO_DEFAULT_BUCKETS: histories
+
+    volumes:
+      - MinioData:/data
+volumes:
+  PostgresData:
+    driver: local
+  MinioData:
+    driver: local
