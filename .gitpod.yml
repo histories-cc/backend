@@ -7,7 +7,6 @@ tasks:
       npm install;
       docker-compose up -d;
       cp .env.example .env;
-      npm run migrate;
       gp sync-done setup;
     command: npm run dev
 
