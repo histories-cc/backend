@@ -28,12 +28,13 @@ model User {
     username  String  @unique
     firstName String
     lastName  String?
+    bio       String?
     profile   Image?  @relation(fields: [profileId], references: [id])
     profileId String?
     posts     Post[]
     verified  Boolean @default(false)
     isAdmin   Boolean @default(false)
-    password  String
+    password  String?
 
     collections     Collection[]
     verifyUserToken VerifyUserToken[]
