@@ -14,12 +14,13 @@ const typeDefs = gql`
     places: [Place!]!
     picture(id: String): Picture
   }
-  
+
   type Mutation {
     createUser(input: CreateUserInput!): String
     deleteUser(input: DeleteUserInput!): String
+    login(input: LoginInput!): String
   }
-  
+
   input CreateUserInput {
     username: String
     firstName: String
@@ -29,7 +30,7 @@ const typeDefs = gql`
     password: String
   }
 
-  input DeleteUserInput{
+  input DeleteUserInput {
     id: String
     password: String
   }
@@ -107,6 +108,11 @@ const typeDefs = gql`
     url: String
     alt: String
     blurhash: String
+  }
+
+  input LoginInput {
+    username: String!
+    password: String!
   }
 `;
 

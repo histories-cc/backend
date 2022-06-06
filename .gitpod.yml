@@ -3,15 +3,22 @@
 # and commit this file to your remote git repository to share the goodness with others.
 
 tasks:
-  - init: >
-      npm install;
+  - name: dev server
+    init: >
       docker-compose up -d;
+      npm install;
       cp .env.example .env;
       gp sync-done setup;
-    command: npm run dev
+    command: npm run dev 
 
 ports:
   - port: 4000
+    onOpen: ignore
+    visibility: public
+  - port: 5555
+    onOpen: ignore
+    visibility: public
+  - port: 5432
     onOpen: ignore
     visibility: public
 
