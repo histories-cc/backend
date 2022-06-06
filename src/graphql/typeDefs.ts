@@ -8,6 +8,8 @@ const typeDefs = gql`
 
     user(input: UserInput!): User
     users: [User]
+    post(id: String): Post
+    posts: [Post!]!
   }
 
   interface IEntity {
@@ -31,6 +33,8 @@ const typeDefs = gql`
     username: String!
     verified: Boolean
     isAdmin: Boolean
+
+    posts: [Post!]!
   }
 
   type Me implements IEntity {
@@ -41,7 +45,38 @@ const typeDefs = gql`
     firstName: String!
     lastName: String
     username: String!
+
+    posts: [Post!]!
   }
+
+  type Post implements IEntity {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    description: String
+
+    authorId: ID!
+    author: User!
+
+    placeId: ID
+    place: Place
+  }
+
+  type Place implements IEntity {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    name: String
+    description: String
+    address: String
+    latitude: Float!
+    longitude: Float!
+
+    posts: [Post!]!
+  }
+
 `;
 
 export default typeDefs;
