@@ -10,6 +10,8 @@ const typeDefs = gql`
     users: [User]
     post(id: String): Post
     posts: [Post!]!
+    place(id: String): Place
+    places: [Place!]!
   }
 
   interface IEntity {
@@ -76,7 +78,6 @@ const typeDefs = gql`
 
     posts: [Post!]!
   }
-
 `;
 
 export default typeDefs;

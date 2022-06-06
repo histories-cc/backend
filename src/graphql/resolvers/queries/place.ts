@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { validate as ValidateUUID } from 'uuid';
 
-export const post = async (
+export const place = async (
   _: any,
   { input }: { input: { id?: string | null } }
 ) => {
@@ -14,7 +14,7 @@ export const post = async (
   const prisma = new PrismaClient();
 
   if (id) {
-    return prisma.post.findUnique({
+    return prisma.place.findUnique({
       where: {
         id,
       },
@@ -22,8 +22,8 @@ export const post = async (
   }
 };
 
-export const posts = async () => {
+export const places = async () => {
   const prisma = new PrismaClient();
 
-  return await prisma.post.findMany();
+  return await prisma.place.findMany();
 };

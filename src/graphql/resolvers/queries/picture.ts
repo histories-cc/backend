@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { validate as ValidateUUID } from 'uuid';
 
-export const post = async (
+export const picture = async (
   _: any,
   { input }: { input: { id?: string | null } }
 ) => {
@@ -14,16 +14,10 @@ export const post = async (
   const prisma = new PrismaClient();
 
   if (id) {
-    return prisma.post.findUnique({
+    return prisma.picture.findUnique({
       where: {
         id,
       },
     });
   }
-};
-
-export const posts = async () => {
-  const prisma = new PrismaClient();
-
-  return await prisma.post.findMany();
 };

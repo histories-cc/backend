@@ -25,11 +25,11 @@ model User {
     verified Boolean @default(false)
     isAdmin  Boolean @default(false)
 
-    posts Post[]
-
-
     profilePictureId String?
     profilePicture   Picture? @relation(fields: [profilePictureId], references: [id])
+
+
+    posts Post[]
 }
 
 model Post {
@@ -39,11 +39,12 @@ model Post {
 
     description String?
 
-    authorId String
+    authorId String @unique
     author   User   @relation(fields: [authorId], references: [id])
 
     Place   Place?  @relation(fields: [placeId], references: [id])
     placeId String?
+
 }
 
 model Place {
