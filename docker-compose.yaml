@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 
 services:
   postgres:
@@ -33,7 +33,15 @@ services:
 
     volumes:
       - MinioData:/data
-volumes:
+  redis:
+    image: "redis:alpine"
+    command: redis-server
+    restart: unless-stopped
+
+    expose:
+     - "6379"
+     
+volumes: 
   PostgresData:
     driver: local
   MinioData:

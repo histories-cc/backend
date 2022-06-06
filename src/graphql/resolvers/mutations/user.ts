@@ -38,9 +38,9 @@ export const createUser = async (
     throw new Error('Last name must be less than 48 characters');
 
   const prisma = new PrismaClient();
- 
+
   // create user
-  await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       username,
       firstName,
@@ -52,7 +52,13 @@ export const createUser = async (
       ),
     },
   });
-  return 'success';
+  const session = await prisma.session.create({
+    data: {
+      userId: user.id,
+    },
+  });
+
+  return session.id;
 };
 
 export const deleteUser = async (

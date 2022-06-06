@@ -29,7 +29,8 @@ model User {
     profilePicture   Picture? @relation(fields: [profilePictureId], references: [id])
 
 
-    posts Post[]
+    posts   Post[]
+    sessions Session[]
 }
 
 model Post {
@@ -39,7 +40,7 @@ model Post {
 
     description String?
 
-    authorId String 
+    authorId String
     author   User   @relation(fields: [authorId], references: [id])
 
     place   Place?  @relation(fields: [placeId], references: [id])
@@ -75,4 +76,13 @@ model Picture {
 
     user  User[]
     place Place[]
+}
+
+model Session {
+    id        String   @id @unique @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
 }
