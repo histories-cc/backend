@@ -1,13 +1,11 @@
 import { PrismaClient } from '@prisma/client';
+import { user, users } from './queries/user';
 
 const resolvers = {
   Query: {
     hello: () => 'Hello world!',
-
-    users: async () => {
-      const prisma = new PrismaClient();
-      return await prisma.user.findMany();
-    },
+    user,
+    users,
   },
 };
 
