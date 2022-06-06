@@ -18,6 +18,10 @@ export const place = async (
       where: {
         id,
       },
+      include: {
+        posts: true,
+        previewPicture: true,
+      },
     });
   }
 };
@@ -25,5 +29,10 @@ export const place = async (
 export const places = async () => {
   const prisma = new PrismaClient();
 
-  return await prisma.place.findMany();
+  return await prisma.place.findMany({
+    include: {
+      posts: true,
+      previewPicture: true,
+    },
+  });
 };

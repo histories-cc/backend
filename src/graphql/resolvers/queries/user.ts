@@ -28,6 +28,10 @@ export const user = async (
       where: {
         username,
       },
+      include: {
+        posts: true,
+        profilePicture: true,
+      },
     });
   }
 };
@@ -35,5 +39,10 @@ export const user = async (
 export const users = async () => {
   const prisma = new PrismaClient();
 
-  return await prisma.user.findMany({});
+  return await prisma.user.findMany({
+    include: {
+      posts: true,
+      profilePicture: true,
+    },
+  });
 };

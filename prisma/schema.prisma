@@ -42,7 +42,7 @@ model Post {
     authorId String @unique
     author   User   @relation(fields: [authorId], references: [id])
 
-    Place   Place?  @relation(fields: [placeId], references: [id])
+    place   Place?  @relation(fields: [placeId], references: [id])
     placeId String?
 
 }
@@ -71,7 +71,8 @@ model Picture {
 
     url      String
     blurhash String
+    alt      String?
 
-    User  User[]
-    Place Place[]
+    user  User[]
+    place Place[]
 }

@@ -12,6 +12,26 @@ const typeDefs = gql`
     posts: [Post!]!
     place(id: String): Place
     places: [Place!]!
+    picture(id: String): Picture
+  }
+  
+  type Mutation {
+    createUser(input: CreateUserInput!): String
+    deleteUser(input: DeleteUserInput!): String
+  }
+  
+  input CreateUserInput {
+    username: String
+    firstName: String
+    lastName: String
+    googleId: String
+    email: String
+    password: String
+  }
+
+  input DeleteUserInput{
+    id: String
+    password: String
   }
 
   interface IEntity {
@@ -77,6 +97,16 @@ const typeDefs = gql`
     longitude: Float!
 
     posts: [Post!]!
+  }
+
+  type Picture implements IEntity {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    url: String
+    alt: String
+    blurhash: String
   }
 `;
 

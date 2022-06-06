@@ -18,6 +18,10 @@ export const post = async (
       where: {
         id,
       },
+      include: {
+        author: true,
+        place: true,
+      },
     });
   }
 };
@@ -25,5 +29,10 @@ export const post = async (
 export const posts = async () => {
   const prisma = new PrismaClient();
 
-  return await prisma.post.findMany();
+  return await prisma.post.findMany({
+    include: {
+      author: true,
+      place: true,
+    },
+  });
 };
