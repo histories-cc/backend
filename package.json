@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node ./server.ts",
+    "dev": "nodemon server.ts",
+    "start": "ts-node ./server.ts",
     "build": "tsc --build",
     "clean": "tsc --build --clean",
     "prisma:migrate": "npx prisma migrate dev --name init",
@@ -22,11 +23,14 @@
   "homepage": "https://github.com/histories-cc/backend#readme",
   "dependencies": {
     "@prisma/client": "^3.14.0",
+    "apollo-server": "^3.8.2",
     "bcrypt": "^5.0.1",
     "express": "^4.18.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.8.0",
+    "graphql-scalars": "^1.17.0",
     "nodemailer": "^6.7.5",
+    "nodemon": "^2.0.16",
     "prisma": "^3.14.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"

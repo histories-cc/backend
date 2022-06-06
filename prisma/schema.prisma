@@ -7,70 +7,21 @@ generator client {
     provider = "prisma-client-js"
 }
 
-model Post {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    description String?
-    authorId    String
-    images      Image[]
-    author      User    @relation(fields: [authorId], references: [id])
-}
-
 model User {
-    id        String   @id @default(uuid())
+    id        String   @id @unique @default(uuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    googleId  String? @unique
-    email     String  @unique
-    username  String  @unique
     firstName String
     lastName  String?
     bio       String?
-    profile   Image?  @relation(fields: [profileId], references: [id])
-    profileId String?
-    posts     Post[]
-    verified  Boolean @default(false)
-    isAdmin   Boolean @default(false)
-    password  String?
+    username  String  @unique
+    email     String  @unique
+    newEmail  String? // new email address for verification when changing email
 
-    collections     Collection[]
-    verifyUserToken VerifyUserToken[]
-}
+    googleId String? @unique
+    password String
 
-model VerifyUserToken {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    User   User   @relation(fields: [userId], references: [id])
-    userId String
-}
-
-model Collection {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    name        String
-    description String?
-    author      User    @relation(fields: [userId], references: [id])
-
-
-    userId String
-}
-
-model Image {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    width    Int
-    height   Int
-    blurhash String
-    User     User[]
-    Post     Post?   @relation(fields: [postId], references: [id])
-    postId   String?
+    verified Boolean @default(false)
+    isAdmin  Boolean @default(false)
 }

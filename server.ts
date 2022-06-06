@@ -1,29 +1,17 @@
-import express from "express";
-import { graphqlHTTP } from "express-graphql";
-import { buildSchema } from "graphql";
+import { ApolloServer, gql } from 'apollo-server';
+import typeDefs from './src/graphql/typeDefs';
+import resolvers from './src/graphql/resolvers';
 
-// Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
-
-// The root provides a resolver function for each API endpoint
-var root = {
-  hello: () => {
-    return "Hello world!";
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: async ({ req }) => {
+    return {
+      myProperty: true,
+    };
   },
-};
+});
 
-var app = express();
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema: schema,
-    rootValue: root,
-    graphiql: true,
-  })
-);
-app.listen(4000);
-console.log("Running a GraphQL API server at http://localhost:4000/graphql");
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
