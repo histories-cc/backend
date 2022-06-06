@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "dist",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "removeComments": true
+  },
+  "compileOnSave": true,
+  "include": ["server.ts", "src"],
+  "exclude": ["**/__test__"]
+}
