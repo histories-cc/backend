@@ -38,7 +38,7 @@ export const createUser = async (
     throw new Error('Last name must be less than 48 characters');
 
   const prisma = new PrismaClient();
-  
+ 
   // create user
   await prisma.user.create({
     data: {
@@ -46,10 +46,13 @@ export const createUser = async (
       firstName,
       lastName,
       email,
-      password: await bcrypt.hash(password, 10),
+      password: await bcrypt.hash(
+        password,
+        parseInt(process.env.HASH_SALT || '10')
+      ),
     },
   });
-  return "success";
+  return 'success';
 };
 
 export const deleteUser = async (

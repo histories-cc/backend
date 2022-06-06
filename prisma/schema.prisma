@@ -39,7 +39,7 @@ model Post {
 
     description String?
 
-    authorId String @unique
+    authorId String 
     author   User   @relation(fields: [authorId], references: [id])
 
     place   Place?  @relation(fields: [placeId], references: [id])

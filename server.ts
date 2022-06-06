@@ -1,3 +1,4 @@
+require('dotenv').config()
 import { ApolloServer, gql } from 'apollo-server';
 import typeDefs from './src/graphql/typeDefs';
 import resolvers from './src/graphql/resolvers';
@@ -22,7 +23,9 @@ const server = new ApolloServer({
     };
   },
 });
-
-server.listen().then(({ url }) => {
+ 
+server.listen({
+  port: process.env.PORT || 4000,
+}).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });
