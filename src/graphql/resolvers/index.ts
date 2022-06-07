@@ -1,9 +1,9 @@
-import { user, users } from './queries/user';
+import { user, users,me } from './queries/user';
 import { post, posts } from './queries/post';
 import { place, places } from './queries/place';
 import { picture } from './queries/picture';
 
-import { createUser, deleteUser } from './mutations/user';
+import { createUser, deleteUser, login } from './mutations/user';
 
 const resolvers = {
   Query: {
@@ -12,6 +12,7 @@ const resolvers = {
     // user
     user,
     users,
+    me,
 
     // post
     post,
@@ -28,6 +29,7 @@ const resolvers = {
     // user
     createUser,
     deleteUser,
+    login
   },
 };
 

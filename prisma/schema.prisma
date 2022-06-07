@@ -84,5 +84,6 @@ model Session {
     updatedAt DateTime @updatedAt
 
     userId String
+    userAgent String?
     user   User   @relation(fields: [userId], references: [id])
 }

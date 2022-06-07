@@ -1,8 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { validate as ValidateUUID } from 'uuid';
 import bcrypt from 'bcrypt';
-import isEmail from 'validator/lib/isEmail';
 import ValidateUsername from '../../../functions/validateUsername';
+import IsEmail from 'validator/lib/isEmail';
+import IContext from '../../../types/context';
 
 export const createUser = async (
   _: any,
@@ -19,7 +20,7 @@ export const createUser = async (
     };
   }
 ) => {
-  if (typeof email !== 'string' || !isEmail(email))
+  if (typeof email !== 'string' || !IsEmail(email))
     throw new Error('Invalid email');
   if (typeof password !== 'string' || password.length < 8)
     throw new Error('Password must be at least 8 characters');
@@ -61,13 +62,11 @@ export const createUser = async (
 
 export const deleteUser = async (
   _: any,
-  {
-    input: { id, password },
-  }: { input: { id?: string | null; password?: string | null } }
+  { password }: { password?: string | null },
+  { logged }: IContext
 ) => {
   // validate input
-  if (typeof id !== 'string' || (typeof id === 'string' && !ValidateUUID(id)))
-    throw new Error('Invalid ID');
+  if (logged === null) throw new Error('User must be logged');
   if (typeof password !== 'string') throw new Error('Invalid password');
 
   const prisma = new PrismaClient();
@@ -75,7 +74,7 @@ export const deleteUser = async (
   // get user from DB
   const user = await prisma.user.findUnique({
     where: {
-      id,
+      id: logged,
     },
   });
 
@@ -89,7 +88,7 @@ export const deleteUser = async (
   // delete user
   await prisma.user.delete({
     where: {
-      id,
+      id: logged,
     },
   });
 
@@ -100,7 +99,7 @@ export const login = async (
   _: any,
   {
     input: { username, password },
-  }: { input: { username?: string | null; password?: string | null } }
+  }: { input: { username?: string | null; password?: string | null } }, {userAgent}:IContext
 ) => {
   if (typeof password !== 'string' || password.length < 8)
     throw new Error('Password must be at least 8 characters');
@@ -109,11 +108,15 @@ export const login = async (
 
   const prisma = new PrismaClient();
 
+  const isEmail = IsEmail(username);
+
   // get user from DB
   const user = await prisma.user.findUnique({
-    where: {
-      username,
-    },
+    where: isEmail
+      ? { email: username }
+      : {
+          username,
+        },
   });
 
   // check if user exists
@@ -126,8 +129,9 @@ export const login = async (
   const session = await prisma.session.create({
     data: {
       userId: user.id,
+      userAgent
     },
   });
-
+ 
   return session.id;
 };

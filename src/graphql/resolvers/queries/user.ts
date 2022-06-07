@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { validate as ValidateUUID } from 'uuid';
 import ValidateUsername from '../../../functions/validateUsername';
+import IContext from '../../../types/context';
 
 export const user = async (
   _: any,
@@ -18,13 +19,13 @@ export const user = async (
   const prisma = new PrismaClient();
 
   if (id) {
-    return prisma.user.findUnique({
+    return await prisma.user.findUnique({
       where: {
         id,
       },
     });
   } else if (username) {
-    return prisma.user.findUnique({
+    return await prisma.user.findUnique({
       where: {
         username,
       },
@@ -40,6 +41,22 @@ export const users = async () => {
   const prisma = new PrismaClient();
 
   return await prisma.user.findMany({
+    include: {
+      posts: true,
+      profilePicture: true,
+    },
+  });
+};
+
+export const me = async (_: any, __: any, { logged }: IContext) => {
+  if (logged === null) throw new Error('User must be logged');
+
+  const prisma = new PrismaClient();
+
+  return await prisma.user.findUnique({
+    where: {
+      id: logged,
+    },
     include: {
       posts: true,
       profilePicture: true,
