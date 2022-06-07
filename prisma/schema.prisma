@@ -7,6 +7,10 @@ generator client {
     provider = "prisma-client-js"
 }
 
+generator typegraphql {
+    provider = "typegraphql-prisma"
+}
+
 model User {
     id        String   @id @unique @default(uuid())
     createdAt DateTime @default(now())
@@ -26,11 +30,12 @@ model User {
     isAdmin  Boolean @default(false)
 
     profilePictureId String?
-    profilePicture   Picture? @relation(fields: [profilePictureId], references: [id], onDelete: Cascade)
+    profilePicture   Picture? @relation(fields: [profilePictureId], references: [id])
 
 
-    posts    Post[]
-    sessions Session[]
+    posts      Post[]
+    sessions   Session[]
+    Collection Collection[]
 }
 
 model Post {
@@ -41,11 +46,12 @@ model Post {
     description String?
 
     authorId String
-    author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    author   User   @relation(fields: [authorId], references: [id])
 
     place   Place?  @relation(fields: [placeId], references: [id])
     placeId String?
 
+    collections Collection[]
 }
 
 model Place {
@@ -70,6 +76,7 @@ model Picture {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
+
     url      String
     blurhash String
     alt      String?
@@ -86,4 +93,17 @@ model Session {
     userId    String
     userAgent String?
     user      User    @relation(fields: [userId], references: [id])
+}
+
+model Collection {
+    id        String   @id @unique @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    name        String?
+    description String?
+    authorId    String
+    author      User    @relation(fields: [authorId], references: [id])
+
+    posts Post[]
 }

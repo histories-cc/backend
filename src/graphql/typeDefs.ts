@@ -15,10 +15,19 @@ const typeDefs = gql`
     user(input: UserInput!): User
     users: [User]
 
-    post(id: String): Post
+    # post
+    post(id: String!): Post
     posts: [Post!]!
-    place(id: String): Place
+
+    # place
+    place(id: String!): Place
     places: [Place!]!
+
+    # collection
+    collection(id: String!): Collection
+    collections: [Collection!]!
+
+    # picture
     picture(id: String): Picture
   }
 
@@ -127,6 +136,35 @@ const typeDefs = gql`
     url: String
     alt: String
     blurhash: String
+  }
+
+  type Collection implements IEntity {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    name: String
+    description: String
+    authorId: ID!
+    author: User!
+
+    posts: [Post!]!
+  }
+
+  type Comment implements IEntity {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    content: String!
+    authorId: ID!
+    author: User!
+
+    postId: ID
+    post: Post
+
+    commentId: ID
+    comment: Comment
   }
 
   input LoginInput {

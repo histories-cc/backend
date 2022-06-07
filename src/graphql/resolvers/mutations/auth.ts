@@ -5,6 +5,7 @@ import IsEmail from 'validator/lib/isEmail';
 import IContext from '../../../types/context';
 import { validate as IsUUID } from 'uuid';
 
+// LOGIN
 export const login = async (
   _: any,
   {
@@ -50,6 +51,7 @@ export const login = async (
   return session.id;
 };
 
+// DELETE SESSION
 export const deleteSession = async (
   _: any,
   { id }: { id?: string | null },

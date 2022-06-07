@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import IContext from '../../../types/context';
 import { validate as IsUUID } from 'uuid';
 
+// CREATE POST
 export const createPost = async (
   _: any,
   { input: { description } }: { input: { description: string } },
@@ -22,6 +23,7 @@ export const createPost = async (
   return 'success';
 };
 
+// DELETE POST
 export const deletePost = async (
   _: any,
   { id }: { id?: string | null },
