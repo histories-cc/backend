@@ -1,18 +1,24 @@
-import { user, users,me } from './queries/user';
+import { user, users } from './queries/user';
 import { post, posts } from './queries/post';
 import { place, places } from './queries/place';
 import { picture } from './queries/picture';
+import { session, sessions, me } from './queries/auth';
 
-import { createUser, deleteUser, login } from './mutations/user';
+import { createUser, deleteUser } from './mutations/user';
+import { deleteAllSessions, deleteSession, login } from './mutations/auth';
 
 const resolvers = {
   Query: {
     hello: () => 'Hello world!',
 
+    // auth
+    me,
+    session,
+    sessions,
+
     // user
     user,
     users,
-    me,
 
     // post
     post,
@@ -26,10 +32,14 @@ const resolvers = {
     picture,
   },
   Mutation: {
+    // auth
+    login,
+    deleteSession,
+    deleteAllSessions,
+
     // user
     createUser,
     deleteUser,
-    login
   },
 };
 

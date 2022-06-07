@@ -26,10 +26,10 @@ model User {
     isAdmin  Boolean @default(false)
 
     profilePictureId String?
-    profilePicture   Picture? @relation(fields: [profilePictureId], references: [id])
+    profilePicture   Picture? @relation(fields: [profilePictureId], references: [id], onDelete: Cascade)
 
 
-    posts   Post[]
+    posts    Post[]
     sessions Session[]
 }
 
@@ -41,7 +41,7 @@ model Post {
     description String?
 
     authorId String
-    author   User   @relation(fields: [authorId], references: [id])
+    author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
     place   Place?  @relation(fields: [placeId], references: [id])
     placeId String?
@@ -83,7 +83,7 @@ model Session {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    userId String
+    userId    String
     userAgent String?
-    user   User   @relation(fields: [userId], references: [id])
+    user      User    @relation(fields: [userId], references: [id])
 }

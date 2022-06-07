@@ -6,9 +6,14 @@ const typeDefs = gql`
   type Query {
     hello: String
 
+    # auth
+    me: Me
+    session: Session!
+    sessions: [Session!]!
+
+    # user
     user(input: UserInput!): User
     users: [User]
-    me: Me
 
     post(id: String): Post
     posts: [Post!]!
@@ -18,9 +23,14 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    # auth
+    login(input: LoginInput!): String
+    deleteSession(id: String!): String
+    deleteAllSessions(id: String!): String
+
+    # user
     createUser(input: CreateUserInput!): String
     deleteUser(password: String!): String
-    login(input: LoginInput!): String
   }
 
   input CreateUserInput {
@@ -31,7 +41,6 @@ const typeDefs = gql`
     email: String
     password: String
   }
- 
 
   interface IEntity {
     id: ID!
@@ -42,6 +51,15 @@ const typeDefs = gql`
   input UserInput {
     id: ID
     username: String
+  }
+
+  type Session implements IEntity {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    userId: String!
+    userAgent: String
   }
 
   type User implements IEntity {
@@ -59,14 +77,14 @@ const typeDefs = gql`
   }
 
   type Me implements IEntity {
- id: ID!
+    id: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
 
     firstName: String!
     lastName: String
     username: String!
-    email:String!
+    email: String!
     verified: Boolean
     isAdmin: Boolean
 

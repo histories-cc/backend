@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { validate as ValidateUUID } from 'uuid';
 import bcrypt from 'bcrypt';
 import ValidateUsername from '../../../functions/validateUsername';
 import IsEmail from 'validator/lib/isEmail';
@@ -93,45 +92,4 @@ export const deleteUser = async (
   });
 
   return 'success';
-};
-
-export const login = async (
-  _: any,
-  {
-    input: { username, password },
-  }: { input: { username?: string | null; password?: string | null } }, {userAgent}:IContext
-) => {
-  if (typeof password !== 'string' || password.length < 8)
-    throw new Error('Password must be at least 8 characters');
-  if (typeof username !== 'string' || !ValidateUsername(username))
-    throw new Error('Invalid username');
-
-  const prisma = new PrismaClient();
-
-  const isEmail = IsEmail(username);
-
-  // get user from DB
-  const user = await prisma.user.findUnique({
-    where: isEmail
-      ? { email: username }
-      : {
-          username,
-        },
-  });
-
-  // check if user exists
-  if (!user) throw new Error('User not found');
-
-  // check password
-  const isValid = await bcrypt.compare(password, user.password);
-  if (!isValid) throw new Error('Invalid password');
-
-  const session = await prisma.session.create({
-    data: {
-      userId: user.id,
-      userAgent
-    },
-  });
- 
-  return session.id;
 };
