@@ -9,7 +9,8 @@
     "build": "tsc --build",
     "clean": "rm -rf dist",
     "prisma:migrate": "npx prisma migrate dev --name init",
-    "prisma:studio": " npx prisma studio"
+    "prisma:studio": "npx prisma studio",
+    "prisma:clean": "rm -rf ./prisma/migrations"
   },
   "repository": {
     "type": "git",
