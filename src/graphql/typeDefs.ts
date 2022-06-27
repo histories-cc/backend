@@ -43,12 +43,12 @@ const typeDefs = gql`
   }
 
   input CreateUserInput {
-    username: String
-    firstName: String
+    username: String!
+    firstName: String!
     lastName: String
     googleId: String
-    email: String
-    password: String
+    email: String!
+    password: String!
   }
 
   interface IEntity {
