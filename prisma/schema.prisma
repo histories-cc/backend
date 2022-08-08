@@ -25,8 +25,8 @@ model User {
     verified Boolean @default(false)
     isAdmin  Boolean @default(false)
 
-    profilePictureId String?
-    profilePicture   Picture? @relation(fields: [profilePictureId], references: [id])
+    profile String?
+    profileRel   Picture? @relation(fields: [profile], references: [id])
 
 
     posts      Post[]

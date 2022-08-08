@@ -43,7 +43,7 @@ export const createUser = async (
       username,
       firstName,
       lastName,
-      email,
+      email, 
       password: await bcrypt.hash(
         password,
         parseInt(process.env.HASH_SALT || '10')

@@ -83,6 +83,9 @@ const typeDefs = gql`
     isAdmin: Boolean
 
     posts: [Post!]!
+
+    profile: ID
+    profileRel: Picture
   }
 
   type Me implements IEntity {

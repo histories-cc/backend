@@ -43,7 +43,7 @@ export const me = async (_: any, __: any, { logged }: IContext) => {
     },
     include: {
       posts: true,
-      profilePicture: true,
+      profileRel: true,
     },
   });
 };

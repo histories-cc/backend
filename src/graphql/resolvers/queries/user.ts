@@ -31,7 +31,7 @@ export const user = async (
       },
       include: {
         posts: true,
-        profilePicture: true,
+        profileRel: true,
       },
     });
   }
@@ -43,7 +43,7 @@ export const users = async () => {
   return await prisma.user.findMany({
     include: {
       posts: true,
-      profilePicture: true,
+      profileRel: true,
     },
   });
 };
